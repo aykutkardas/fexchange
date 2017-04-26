@@ -1,15 +1,18 @@
 var game = new GameBoard('game', {
-    x: 5,
-    y: 5,
+    x: 4,
+    y: 4,
     target: "body",
-    typeSize: 9,
+    typeSize: 6,
     item: {
-        width: 80,
-        height: 80
+        width: 50,
+        height: 50
     }
 });
 
 var mach = new GameMachine(game.x, game.y);
 
+var ctrl = new GameControl(mach);
+
 mach.createPosition();
 game.createBoard();
+ctrl.createGrids();
