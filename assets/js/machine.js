@@ -153,4 +153,11 @@ function GameMachine(x, y) {
         return possibleSteps;
 
     }
+
+    this.getRulesSet = function (index) {
+        var positionGroup = this.whereIm(index);
+        return this.rulesFormule[positionGroup];
+    }
+
+
 }
