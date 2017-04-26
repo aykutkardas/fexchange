@@ -70,6 +70,16 @@ function GameBoard(name, opt) {
             .attr('ondrop', name + '.drop(event)')
             .attr('ondragover', name + '.sweep(event)');
 
+        var items = document.querySelectorAll('.item');
+
+        for (var i = 0; i < items.length; i++) {
+
+            this.virtualBoard.push(items[i].getAttribute('class').split(' ')[1]);
+            this.mirrorBoard.push(items[i].getAttribute('class').split(' ')[1]);
+
+
+        }
+
 
 
 
@@ -78,6 +88,10 @@ function GameBoard(name, opt) {
 
     // Geçici veri deposu.
     this.tempStorage = {};
+
+    // Sanal board.
+    this.virtualBoard = [];
+    this.mirrorBoard = [];
 
     // Sürüklemeye başlama fonksiyonu.
     this.drag = function (e) {
@@ -101,15 +115,37 @@ function GameBoard(name, opt) {
     this.drop = function (e) {
 
         e.preventDefault();
+
         var targetElemenetPosition = parseInt(e.target.parentElement.id.slice(1, 100));
+
         this.tempStorage['SECOND_STEP'] = targetElemenetPosition;
 
-        if (this.tempStorage['NEXT_STEP'].indexOf(targetElemenetPosition) > -1) {
-            var targetItemID = e.dataTransfer.getData("TARGET_ID");
-            e.target.parentElement.appendChild(document.querySelector("#" + targetItemID));
 
-            document.querySelector("#s" + this.tempStorage['FIRST_STEP']).appendChild(e.target);
+
+        this.virtualBoard[this.tempStorage['SECOND_STEP']] = this.mirrorBoard[this.tempStorage['FIRST_STEP']];
+        this.virtualBoard[this.tempStorage['FIRST_STEP']] = this.mirrorBoard[this.tempStorage['SECOND_STEP']];
+
+        console.log(this.virtualBoard);
+
+        if (ctrl.isItDone(this.tempStorage['SECOND_STEP'])) {
+
+            if (this.tempStorage['NEXT_STEP'].indexOf(targetElemenetPosition) > -1) {
+                var targetItemID = e.dataTransfer.getData("TARGET_ID");
+                e.target.parentElement.appendChild(document.querySelector("#" + targetItemID));
+
+                document.querySelector("#s" + this.tempStorage['FIRST_STEP']).appendChild(e.target);
+            }
+        } else {
+
+            this.virtualBoard = this.mirrorBoard;
+
         }
+        console.log(this.virtualBoard);
+
+
+
+
+        console.log(ctrl.isItDone(targetElemenetPosition));
 
     }
 

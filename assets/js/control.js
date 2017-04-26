@@ -1,5 +1,21 @@
 function GameControl(machine) {
 
+    function arrayElementCounter(arr) {
+
+        var temp = {};
+        for (var i = 0; i < arr.length; i++) {
+
+            if (!(temp[arr[i]])) {
+                temp[arr[i]] = 1;
+            } else {
+                temp[arr[i]]++;
+            }
+        }
+
+        return temp;
+
+    }
+
     this.position = machine.position;
 
 
@@ -107,31 +123,64 @@ function GameControl(machine) {
             temp[5].push(this.whichGrid(index).vertical[i]);
         }
 
-        var boolStorage = [];
-        var controlMemory = [];
-        for (var i = 0; i < temp.length; i++) {
-            for (var j = 0; j < temp[i].length; j++) {
-                var tempItem = document.querySelector('.slot').firstChild().getAttribute('class').split(' ')[1];
-                controlMemory.push(tempItem);
-                if (controlMemory.length > 0) {
-                    if (controlMemory.indexOf(tempItem)) {
-                        boolStorage.push(true);
-                    }
-                }
 
-                if (i0 === i1) {
-                    return true;
-                } else {
-                    return false;
+
+        var boolStorage = [[], [], [], [], [], []];
+
+        var targetItem = document.querySelectorAll('.slot')[index]
+            .children[0]
+            .getAttribute('class')
+            .split(' ')[1];
+
+
+        // [OK!]
+        for (var i = 0; i < temp.length; i++) {
+
+            var controlMemory = [];
+
+            for (var j = 0; j < temp[i].length; j++) {
+
+                if (undefined !== temp[i][j]) {
+
+                    if (temp[i][j] === index) {
+                        //    var tempItem = document.querySelectorAll('.slot')[index]
+                        //        .children[0]
+                        //        .getAttribute('class')
+                        //        .split(' ')[1];
+
+                        var tempItem = game.virtualBoard[index];
+
+                    } else {
+
+                        var tempItem = game.virtualBoard[temp[i][j]];
+
+                    }
+
+                    //                    if (controlMemory.indexOf(tempItem) > -1) {
+                    //                        boolStorage[i].push(true);
+                    //                    }
+
+                    controlMemory.push(tempItem);
+
                 }
 
 
             }
+
+            console.log(game.virtualBoard);
+
+            var result = arrayElementCounter(controlMemory);
+
+            if (result[targetItem] === 3) {
+                return true;
+                break;
+            }
+
         }
 
 
 
-        return temp;
+        return false;
 
     }
 
