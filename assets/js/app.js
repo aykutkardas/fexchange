@@ -1,6 +1,6 @@
 var game = new GameBoard('game', {
-    x: 5,
-    y: 5,
+    x: 8,
+    y: 8,
     target: "body",
     typeSize: 8,
     item: {

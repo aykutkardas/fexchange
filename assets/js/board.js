@@ -116,36 +116,47 @@ function GameBoard(name, opt) {
 
         e.preventDefault();
 
+        // İtemi koyacağım slotun id sini integer olarak tutar.
         var targetElemenetPosition = parseInt(e.target.parentElement.id.slice(1, 100));
 
+        // İtemi koyacağım slotun idsini adım 2 ye yazar.
         this.tempStorage['SECOND_STEP'] = targetElemenetPosition;
 
 
-
+        // Sanal tahtadaki 2. adımın yerindeki classa 1. adımdaki classı yazar.
         this.virtualBoard[this.tempStorage['SECOND_STEP']] = this.mirrorBoard[this.tempStorage['FIRST_STEP']];
+
+        // Sanal tahtadaki 1. adımın yerindeki classa 2. adımdaki classı yazar.
         this.virtualBoard[this.tempStorage['FIRST_STEP']] = this.mirrorBoard[this.tempStorage['SECOND_STEP']];
 
-        console.log(this.virtualBoard);
 
-        if (ctrl.isItDone(this.tempStorage['SECOND_STEP'])) {
+        // Eğer yapılan hamle, gidilebilecek bir yere yapıldıysa.
+        if (this.tempStorage['NEXT_STEP'].indexOf(targetElemenetPosition) > -1) {
 
-            if (this.tempStorage['NEXT_STEP'].indexOf(targetElemenetPosition) > -1) {
+            // 2. adım ve 1. adımı kontrol eder. Herhangi biri kombo sağlıyorsa. İtemlerin yerlerini değiştirir.
+            if (
+                ctrl.isItDone(this.tempStorage['SECOND_STEP']) ||
+                ctrl.isItDone(this.tempStorage['FIRST_STEP'])
+            ) {
+
+                // Yer değiştirme işlemini yap.
                 var targetItemID = e.dataTransfer.getData("TARGET_ID");
                 e.target.parentElement.appendChild(document.querySelector("#" + targetItemID));
 
                 document.querySelector("#s" + this.tempStorage['FIRST_STEP']).appendChild(e.target);
-            }
-        } else {
 
-            this.virtualBoard = this.mirrorBoard;
+                this.mirrorBoard = this.virtualBoard.concat();
+
+                // Değilse
+            } else {
+
+                // Sanal tahtayı eski haline getir.
+                this.virtualBoard = this.mirrorBoard.concat();
+
+            }
 
         }
-        console.log(this.virtualBoard);
 
-
-
-
-        console.log(ctrl.isItDone(targetElemenetPosition));
 
     }
 

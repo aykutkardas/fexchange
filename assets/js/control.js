@@ -18,7 +18,6 @@ function GameControl(machine) {
 
     this.position = machine.position;
 
-
     this.dropControl = function (moveData) {
 
         var rulesSet = machine.getRulesSet(moveData.SECOND_STEP);
@@ -127,10 +126,11 @@ function GameControl(machine) {
 
         var boolStorage = [[], [], [], [], [], []];
 
-        var targetItem = document.querySelectorAll('.slot')[index]
-            .children[0]
-            .getAttribute('class')
-            .split(' ')[1];
+        var targetItem = game.virtualBoard[index];
+        //            document.querySelectorAll('.slot')[index]
+        //            .children[0]
+        //            .getAttribute('class')
+        //            .split(' ')[1];
 
 
         // [OK!]
@@ -167,7 +167,6 @@ function GameControl(machine) {
 
             }
 
-            console.log(game.virtualBoard);
 
             var result = arrayElementCounter(controlMemory);
 
