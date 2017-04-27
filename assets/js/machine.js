@@ -1,8 +1,10 @@
 function GameMachine(x, y) {
 
+    // [OK!]
     this.x = x;
     this.y = y;
 
+    // [OK!]
     // Tüm pozisyon grupları tutucusu.
     this.position = {
         edgeTop: [],
@@ -22,6 +24,7 @@ function GameMachine(x, y) {
         right: []
     };
 
+    // [OK!]
     // Hareket kural formülleri.
     this.rulesFormule = {
         topLeft: [0, 1, x, 0],
@@ -35,6 +38,7 @@ function GameMachine(x, y) {
         middle: [-x, 1, x, -1]
     }
 
+    // [OK!]
     // Tüm pozisyonları gruplandır.
     this.createPosition = function () {
 
@@ -95,6 +99,7 @@ function GameMachine(x, y) {
 
     };
 
+    // [OK!]
     // Verilen indexin hangi grupta olduğunu döndürür.
     this.whereIm = function (index) {
         var pos = this.position;
@@ -141,6 +146,7 @@ function GameMachine(x, y) {
         }
     }
 
+    // [OK!]
     // Verilen indexin hangi slotlara gidebileceğini döndürür.
     this.getExchanceRules = function (index) {
 
@@ -154,6 +160,7 @@ function GameMachine(x, y) {
 
     }
 
+    // [OK!]
     this.getRulesSet = function (index) {
         var positionGroup = this.whereIm(index);
         return this.rulesFormule[positionGroup];

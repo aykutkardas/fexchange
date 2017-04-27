@@ -1,11 +1,11 @@
 var game = new GameBoard('game', {
-    x: 8,
-    y: 8,
+    x: 5,
+    y: 5,
     target: "body",
-    typeSize: 8,
+    typeSize: 7,
     item: {
-        width: 50,
-        height: 50
+        width: 150,
+        height: 150
     }
 });
 

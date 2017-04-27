@@ -1,4 +1,6 @@
 function GameBoard(name, opt) {
+
+    // [OK!]
     var settings = {
         x: opt.x || 5,
         y: opt.y || 5,
@@ -10,18 +12,22 @@ function GameBoard(name, opt) {
         }
     }
 
+    // [OK!]
     this.x = settings.x;
     this.y = settings.y;
 
 
+    // [OK!]
     // 0 ile verilen parametre arasından random bir sayı döner.
     function zeroStartRand(n) {
         return Math.round(Math.random() * 10) % n;
     }
 
+    // [OK!]
     // İtem class larını tutar.
     this.items = [];
 
+    // [OK!]
     // Oyun tahtasını oluşturur.
     this.createBoard = function () {
 
@@ -86,13 +92,16 @@ function GameBoard(name, opt) {
 
     }
 
+    // [OK!]
     // Geçici veri deposu.
     this.tempStorage = {};
 
+    // [OK!]
     // Sanal board.
     this.virtualBoard = [];
     this.mirrorBoard = [];
 
+    // [OK!]
     // Sürüklemeye başlama fonksiyonu.
     this.drag = function (e) {
 
@@ -104,6 +113,7 @@ function GameBoard(name, opt) {
 
     }
 
+    // [OK!]
     // Sürükleme fonksiyonu.
     this.sweep = function (e) {
 
@@ -111,6 +121,7 @@ function GameBoard(name, opt) {
 
     }
 
+    // [OK!]
     // Sürükleme bitiş fonksiyonu.
     this.drop = function (e) {
 
@@ -147,6 +158,13 @@ function GameBoard(name, opt) {
 
                 this.mirrorBoard = this.virtualBoard.concat();
 
+                ctrl.createGrids();
+                ctrl.boardAnalyze();
+                ctrl.isThereEmpty();
+                game.syncBoard();
+
+
+
                 // Değilse
             } else {
 
@@ -157,6 +175,40 @@ function GameBoard(name, opt) {
 
         }
 
+
+
+        //        setTimeout(ctrl.boardAnalyze(), 10);
+        //        setTimeout(ctrl.createGrids(), 20);
+        //        setTimeout(game.syncBoard(), 30);
+        //        setTimeout(ctrl.isThereEmpty(), 40);
+        //        setTimeout(game.syncBoard(), 50);
+
+
+    }
+
+    // [OK!]
+    // Sanal tahtayla oyun tahtasını eşitle.
+    this.syncBoard = function () {
+        var items = document.querySelectorAll('.item');
+
+        for (var i = 0; i < items.length; i++) {
+
+            items[i].setAttribute('class', 'item ' + this.virtualBoard[i]);
+
+        }
+    }
+
+    // [OK!]
+    this.syncVirtual = function () {
+        var items = document.querySelectorAll('.item');
+
+        for (var i = 0; i < items.length; i++) {
+
+            this.virtualBoard.push(items[i].getAttribute('class').split(' ')[1]);
+            this.mirrorBoard.push(items[i].getAttribute('class').split(' ')[1]);
+
+
+        }
 
     }
 
